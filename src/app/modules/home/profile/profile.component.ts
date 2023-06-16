@@ -4,6 +4,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
+import { PrincipalService } from 'src/app/services/principal.service';
+import { Observable } from 'rxjs';
+import { Profile } from 'src/app/models/profile';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +15,7 @@ import { ComponentType } from '@angular/cdk/portal';
 })
 export class ProfileComponent implements OnInit {
   imageChangedEvent: any = '';
+  profile$! : Observable<Profile> 
   croppedImage: any = '';
   showCropper: boolean = false
   dialogRef!: MatDialogRef<any>
@@ -24,9 +28,13 @@ export class ProfileComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
-  constructor(private sanitizer: DomSanitizer, public dialog: MatDialog) { }
+  constructor(private sanitizer: DomSanitizer, 
+    public dialog: MatDialog,
+    public principalService: PrincipalService,
+    ) { }
 
   ngOnInit(): void {
+    this.profile$ = this.principalService.actualProfile$
   }
   
   openDialog() {
@@ -34,7 +42,7 @@ export class ProfileComponent implements OnInit {
       height: '600px',
       width: '600px',
     });
-
+    
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
@@ -74,6 +82,7 @@ imageCropped(event: ImageCroppedEvent) {
   this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl as string);
   console.log(event)
   this.imageSrc = event.base64 as string
+  this.principalService.imageChange$.next(this.imageSrc)
   // event.blob can be used to upload the cropped image
 }
 imageLoaded(image?: LoadedImage) {

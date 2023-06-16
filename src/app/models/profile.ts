@@ -1,4 +1,5 @@
 export interface Profile{
+  img: string;
   name: string;
   hobbie: string;
   birthday: string;
