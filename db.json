@@ -1,0 +1,8 @@
+{
+  "profiles": [
+    {"id": 1,  "name": 1, "hobbie": "", "birthday": "", "DNI": "" }
+  ],
+  "pokemon": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ]
+}

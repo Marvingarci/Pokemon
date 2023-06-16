@@ -1,0 +1,28 @@
+<main *ngIf="!(showLoading | async); else loading" class="flex flex-col pt-20 px-16">
+  <div class="flex space-x-1"> 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-darkBlue mt-2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+    <div class="flex flex-col">
+      <h1 class=" text-4xl	mb-0 text-darkBlue"><strong>!Hola!</strong> Configuremos tu perfil</h1>
+      <h5 class="font-extralight text-lg text-darkGray">Queremos conocerte mejor</h5>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class=" flex flex-col w-1/2">
+        <app-profile></app-profile>
+    </div>
+  
+    <div class=" flex flex-col w-1/2">
+      <app-form-usuario></app-form-usuario>
+    </div>
+  </div>
+
+
+</main>
+
+<ng-template #loading>
+  <app-loading ></app-loading>
+</ng-template>
+

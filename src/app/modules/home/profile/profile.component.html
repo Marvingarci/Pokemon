@@ -1,0 +1,39 @@
+<!-- Card itself -->
+  <div class="px-4 bg-yellow space-y-10 py-14 rounded-[50px] w-96 justify-center items-center mt-10 mx-auto">
+    <h1 class="text-center text-2xl">Imagen perfil</h1>
+
+    <div class=" ">
+      <img class="w-64 h-64 relative mx-auto flex rounded-full justify-center items-center border-[12px] border-white bg-bgGray" [src]="imageSrc" alt="" >
+      <!-- <svg class="text-blueStroke w-24 h-24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg> -->
+    </div>
+
+    <div  class="flex items-center justify-center w-full">
+      <label for="dropzone-file" class="flex flex-col mx-4 items-center justify-center w-full h-20 border-2 border-blueGreen border-dashed  rounded-lg cursor-pointer bg-white ">
+          <div  class="flex items-center justify-around w-full pt-4 pb-4">
+              <p class="text-sm text-blueGreen"><span class="font-semibold">Adjuntar una foto</span></p>
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blueGreen">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
+              </svg>
+          </div>
+          <input id="dropzone-file" type="file" (change)="fileChangeEvent($event)" class="hidden" />
+      </label>
+  </div> 
+  </div>
+<ng-template #someInput>
+  <div class="w-max-full h-max-full w-[500px] w-[500px]">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 4"
+      format="png"
+      output="base64"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+  <button mat-raised-button color="primary" (click)="dialogRef.close()">Done</button>
+  </div>
+</ng-template>

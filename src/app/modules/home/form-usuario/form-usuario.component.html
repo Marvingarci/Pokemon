@@ -1,0 +1,63 @@
+<div class="flex py-14 ">
+
+  <div class="flex flex-col w-80 mx-auto">
+    <h2 class="text-2xl text-darkBlue font-normal">Tu informacion</h2>
+    <span class="text-darkGray text-base font-extralight">Completa la siguiente informacion para completar tu perfil</span>
+    <form class="w-full">
+      <!-- Name -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Ex. Marvin" required>
+        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+
+      <!-- Pasatiempio -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Pasatiempo favorito</mat-label>
+        <mat-chip-list #chipList aria-label="hobbie selection">
+          <mat-chip
+            *ngFor="let hobbie of hobbies"
+            (removed)="remove(hobbie)">
+            {{hobbie}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder=""
+            #hobbieInput
+            [formControl]="fruitCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let hobbie of filteredHobbies | async" [value]="hobbie">
+            {{hobbie}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <!-- DatePicker -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Cumpleaños</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>DNI</mat-label>
+        <input matInput required>
+        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+      <div class="flex w-full justify-center">
+        <button type="button" class="rounded-md px-10 py-2 bg-darkBlue text-white text-base" (click)="saveProfile()">Continuar</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
