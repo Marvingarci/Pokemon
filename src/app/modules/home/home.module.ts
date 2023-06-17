@@ -16,6 +16,12 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { LoadingComponent } from 'src/app/shared/loading/loading.component';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
+import { PokemonCardComponent } from './pokemon-list/pokemon-card/pokemon-card.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { PokeidPipe } from 'src/app/pipes/pokeid.pipe';
+import { SortGenerationPipe } from 'src/app/pipes/sort-generation.pipe';
 
 const routes: Routes = [
     {
@@ -25,7 +31,7 @@ const routes: Routes = [
   ]
 
 @NgModule({
-  declarations: [ProfileComponent,LoadingComponent, PrincipalComponent, FormUsuarioComponent],
+  declarations: [ProfileComponent,LoadingComponent, PokeidPipe, SortGenerationPipe, PrincipalComponent, FormUsuarioComponent, PokemonListComponent, PokemonCardComponent],
   imports: [
     CommonModule,
     MatInputModule,
@@ -40,6 +46,7 @@ const routes: Routes = [
     MatNativeDateModule,
     MatButtonModule,
     MatDialogModule,
+    VirtualScrollerModule,
     RouterModule.forChild(routes)
   ]
 })

@@ -4,4 +4,5 @@ export interface Profile{
   hobbie: string;
   birthday: string;
   DNI: string;
+  Pokemons?: number[];
 }

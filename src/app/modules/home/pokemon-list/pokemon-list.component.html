@@ -1,0 +1,23 @@
+<div class="flex flex-col">
+  <div class="flex flex-col">
+    <h1 class=" text-3xl	mb-0 text-darkBlue">Pokemon</h1>
+    <h5 class="font-extralight text-lg text-darkGray">Selecciona 3 Pokemon para que sean parte de tu equipo</h5>
+  </div>
+  <div class="py-2 rounded-xl bg-">
+    <input type="text" class="">
+  </div>
+  <virtual-scroller #scroll [items]="generation1" >
+    <div class="grid grid-cols-3">
+      <div class="" *ngFor="let pokemon of generation1">
+        <app-pokemon-card (selectOne)="createTeam($event)" [pokemon]="pokemon.pokemon" ></app-pokemon-card>
+      </div>
+    </div>
+</virtual-scroller>
+  <!-- <cdk-virtual-scroll-viewport *ngIf="generation1.length == allPokemons.length" itemSize="50" class="example-viewport">
+    <div *cdkVirtualFor="let pokemon of allPokemons" class="example-item">
+      {{pokemon.name}}
+    </div>
+  </cdk-virtual-scroll-viewport> -->
+  <!-- {{allPokemons | json }} -->
+
+</div>

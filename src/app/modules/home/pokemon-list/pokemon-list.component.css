@@ -1,0 +1,21 @@
+.example-viewport {
+  height: 200px;
+  width: 100%;
+  border: 1px solid black;
+
+}
+
+.example-item {
+  height: 50px;
+}
+
+p {
+  font-family: Lato;
+}
+virtual-scroller {
+  height: 500px;
+}
+
+virtual-scroller div {
+  padding: 12px;
+}
