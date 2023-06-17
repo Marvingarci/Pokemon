@@ -10,6 +10,7 @@ import * as moment from 'moment';
 
 export class PrincipalService {
   initProfile: Profile ={
+    id: Math.floor(Math.random() * 100),
     name:"",
     hobbie:"",
     birthday: "",

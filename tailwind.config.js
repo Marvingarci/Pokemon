@@ -13,6 +13,7 @@ module.exports = {
       blueStroke:   "#9BB8D3",
       blueGreen:  "#2C85BC",
       lightGray:  "#F2F2F2",
+      buttonGray: "#E6E6E6",
       darkGray:   "#919191",
       bgGray:   "#E7EFF5",
       white:      colors.white

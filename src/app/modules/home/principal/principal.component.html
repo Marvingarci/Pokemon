@@ -15,10 +15,10 @@
     </div>
   
     <div *ngIf="(profile$ | async) as profile" class=" flex flex-col w-1/2">
-      <!-- <app-form-usuario *ngIf="profile?.name == ''; else pokemonList" ></app-form-usuario> -->
-      <!-- <ng-template #pokemonList> -->
+      <app-form-usuario *ngIf="profile?.name == ''; else pokemonList" ></app-form-usuario>
+      <ng-template #pokemonList>
         <app-pokemon-list></app-pokemon-list>
-      <!-- </ng-template> -->
+      </ng-template>
     </div>
   </div>
 

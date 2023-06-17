@@ -9,14 +9,12 @@ import { Pokemon } from 'src/app/models/Pokemon';
 export class PokemonCardComponent implements OnInit {
   @Input() pokemon!: Pokemon
   @Output() selectOne: EventEmitter<number> = new EventEmitter<number>()
-  selected: boolean= false
   constructor() { }
 
   ngOnInit(): void {
   }
 
   selectAPokemon(){
-    this.selected = true
     this.selectOne.emit(this.pokemon.id)
   }
 

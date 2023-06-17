@@ -10,7 +10,7 @@
       </svg> -->
     </div>
 
-    <div *ngIf="profile?.hobbie == ''" class="flex items-center justify-center w-full">
+    <div *ngIf="profile?.birthday == ''" class="flex items-center justify-center w-full">
       <label for="dropzone-file" class="flex flex-col mx-4 items-center justify-center w-full h-20 border-2 border-blueGreen border-dashed  rounded-lg cursor-pointer bg-white ">
           <div  class="flex items-center justify-around w-full pt-4 pb-4">
               <p class="text-sm text-blueGreen"><span class="font-semibold">Adjuntar una foto</span></p>
@@ -21,7 +21,7 @@
           <input id="dropzone-file" type="file" (change)="fileChangeEvent($event)" class="hidden" />
       </label>
   </div> 
-  <div class="flex flex-col text-2xl space-y-4 px-3" *ngIf="profile?.hobbie != ''">
+  <div class="flex flex-col text-2xl space-y-4 px-3" *ngIf="profile?.birthday != ''">
     <div class="flex justify-between text-darkBlue">
       <span> <strong>Pasatiempo:</strong> </span>
       <span>{{profile?.hobbie}}</span>

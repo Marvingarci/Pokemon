@@ -1,5 +1,5 @@
 <div *ngIf="pokemon != undefined" class="flex flex-col pt-8 cursor-pointer">
-  <div (click)="selectAPokemon()" class="flex flex-col hover:shadow-lg items-center justify-center p-2 space-y-2 rounded-2xl" [ngClass]="{'bg-lightGray': !selected, 'bg-yellow': selected }">
+  <div (click)="selectAPokemon()" class="flex flex-col hover:shadow-lg items-center justify-center p-2 space-y-2 rounded-2xl" [ngClass]="{'bg-lightGray': !pokemon.selected, 'bg-yellow': pokemon.selected }">
     <img class="-mt-20" [src]="pokemon?.sprites?.other?.home?.front_default" alt="url(https://art.pixilart.com/284ee8a2a6a0fad.png)">
     <div class="bg-darkBlue shadow-lg w-full text-white text-xs rounded-lg font-bold flex justify-between py-1 px-3 ">
       <span>{{pokemon.id | pokeid}}</span>

@@ -3,21 +3,20 @@
     <h1 class=" text-3xl	mb-0 text-darkBlue">Pokemon</h1>
     <h5 class="font-extralight text-lg text-darkGray">Selecciona 3 Pokemon para que sean parte de tu equipo</h5>
   </div>
-  <div class="py-2 rounded-xl bg-">
-    <input type="text" class="">
+  <div class="py-2 my-4 rounded-xl bg-lightGray w-full flex space-x-1 px-2 items-center text-darkGray">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home">search</mat-icon>
+    <input [(ngModel)]="search" placeholder="Buscar por indice, nombre" type="text" class="outline-none focus:outline-none text-base font-semibold bg-lightGray text-darkGray  w-full">
   </div>
   <virtual-scroller #scroll [items]="generation1" >
     <div class="grid grid-cols-3">
-      <div class="" *ngFor="let pokemon of generation1">
-        <app-pokemon-card (selectOne)="createTeam($event)" [pokemon]="pokemon.pokemon" ></app-pokemon-card>
+      <div class="" *ngFor="let pokemon of generation1 | sortGeneration: search">
+        <app-pokemon-card [ngClass]="{'opacity-25': blockOthers && pokemon.pokemon.selected != true}" (selectOne)="createTeam($event)" [pokemon]="pokemon.pokemon" ></app-pokemon-card>
       </div>
     </div>
 </virtual-scroller>
-  <!-- <cdk-virtual-scroll-viewport *ngIf="generation1.length == allPokemons.length" itemSize="50" class="example-viewport">
-    <div *cdkVirtualFor="let pokemon of allPokemons" class="example-item">
-      {{pokemon.name}}
-    </div>
-  </cdk-virtual-scroll-viewport> -->
-  <!-- {{allPokemons | json }} -->
+
+<div class="flex w-full pt-5 justify-center">
+  <button type="button" [ngClass]="{'bg-darkBlue text-white ': blockOthers, 'bg-buttonGray text-darkGray': !blockOthers}" class="rounded-md px-12 py-2 font-semibold text-lg" (click)="savePokemons()">Guardar</button>
+</div>
 
 </div>

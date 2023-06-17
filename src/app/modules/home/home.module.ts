@@ -18,7 +18,6 @@ import {MatButtonModule} from '@angular/material/button';
 import { LoadingComponent } from 'src/app/shared/loading/loading.component';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { PokemonCardComponent } from './pokemon-list/pokemon-card/pokemon-card.component';
-import {ScrollingModule} from '@angular/cdk/scrolling';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { PokeidPipe } from 'src/app/pipes/pokeid.pipe';
 import { SortGenerationPipe } from 'src/app/pipes/sort-generation.pipe';
@@ -26,7 +25,14 @@ import { SortGenerationPipe } from 'src/app/pipes/sort-generation.pipe';
 const routes: Routes = [
     {
       path: '',
-      component: PrincipalComponent
+      children:[
+        {
+          path: 'new', component: PrincipalComponent
+        },
+        {
+          path: 'show/:id', component: PrincipalComponent
+        }
+      ]
     }
   ]
 

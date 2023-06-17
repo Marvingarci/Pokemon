@@ -18,6 +18,7 @@ export interface Pokemon {
   stats:                    Stat[];
   types:                    Type[];
   weight:                   number;
+  selected?:                boolean;
 }
 
 interface Ability {

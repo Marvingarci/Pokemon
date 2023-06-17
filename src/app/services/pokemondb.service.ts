@@ -19,6 +19,9 @@ export class PokemondbService {
   saveProfile(profile: Profile){
     return this.http.post(environment.API_ENDPOINT+"profiles", profile)
   }
+  updateProfile(profile: Profile, id: number){
+    return this.http.put(environment.API_ENDPOINT+"profiles/"+id, profile)
+  }
 
   getFirstGenerationPokemons(): Observable<Generation>{
     return this.http.get<Generation>('https://pokeapi.co/api/v2/generation/1')
