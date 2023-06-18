@@ -5,6 +5,9 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: ()=> import('./modules/home/home.module').then(e => e.HomeModule)
+  },
+  {
+    path: '**', redirectTo: 'home'
   }
 ];
 

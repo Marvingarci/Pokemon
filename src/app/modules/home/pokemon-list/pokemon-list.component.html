@@ -16,7 +16,7 @@
 </virtual-scroller>
 
 <div class="flex w-full pt-5 justify-center">
-  <button type="button" [ngClass]="{'bg-darkBlue text-white ': blockOthers, 'bg-buttonGray text-darkGray': !blockOthers}" class="rounded-md px-12 py-2 font-semibold text-lg" (click)="savePokemons()">Guardar</button>
+  <button type="button" [disabled]="!blockOthers" [ngClass]="{'bg-darkBlue text-white ': blockOthers, 'bg-buttonGray text-darkGray': !blockOthers}" class="rounded-md px-12 py-2 font-semibold text-lg" (click)="savePokemons()">Guardar</button>
 </div>
 
 </div>

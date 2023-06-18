@@ -1,0 +1,11 @@
+  <div class="w-max-full h-max-full w-[500px] w-[500px]">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 4"
+      format="png"
+      output="base64"
+      (imageCropped)="imageCropped($event)"
+  ></image-cropper>
+  <button mat-raised-button color="primary" (click)="closeDialog()">Done</button>
+  </div>

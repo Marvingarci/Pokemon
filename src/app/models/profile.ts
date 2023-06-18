@@ -1,3 +1,5 @@
+import { Pokemon } from "./Pokemon";
+
 export interface Profile{
   id:number;
   img: string;
@@ -5,5 +7,5 @@ export interface Profile{
   hobbie: string;
   birthday: string;
   DNI: string;
-  Pokemons?: number[];
+  Pokemons?: Pokemon[];
 }

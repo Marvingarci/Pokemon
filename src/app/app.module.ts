@@ -15,6 +15,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
     AppComponent,
     HeaderComponent,
     
+    
   ],
   imports: [
     BrowserModule,

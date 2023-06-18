@@ -1,27 +1,47 @@
-<main *ngIf="!(showLoading | async); else loading" class="flex flex-col pt-20 px-16">
+<main *ngIf="!(showLoading | async); else loading">
+  <div *ngIf="(profile$ | async) as profile"  class="flex flex-col pt-20 px-16">
   <div class="flex space-x-1"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-darkBlue mt-2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
     </svg>
-    <div  class="flex flex-col">
+
+    <div *ngIf="profile?.name == '' && !showView" class="flex flex-col">
       <h1 class=" text-4xl	mb-0 text-darkBlue"><strong>!Hola!</strong> Configuremos tu perfil</h1>
       <h5 class="font-extralight text-lg text-darkGray">Queremos conocerte mejor</h5>
+    </div>
+    
+    <div *ngIf="profile?.name != '' && !showView" class="flex flex-col">
+      <h1 class=" text-4xl	mb-0 text-darkBlue"> !Ya casi terminamos!</h1>
+      <h5 class="font-extralight text-lg text-darkGray">Revisa la informacion y completa lo solicitado</h5>
+    </div>
+
+    <div *ngIf="showView" class="flex items-center justify-between">
+      <h1 class=" text-4xl	mb-0 text-darkBlue"> <strong>!Hola {{profile.name}}!</strong> </h1>
+      <div (click)="editProfile(profile.id)"  class="rounded-xl text-darkBlue border border-darkBlue items-center flex px-10">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-base w-6 h-6" fontIcon="home">edit</mat-icon>
+        <span class="text-xs font-medium">Editar perfil</span>
+      </div>    
     </div>
   </div>
 
   <div class="flex">
     <div class=" flex flex-col w-1/2">
-        <app-profile></app-profile>
+        <app-profile [editingProfile]="editingProfile" [showView]="showView"></app-profile>
     </div>
-  
-    <div *ngIf="(profile$ | async) as profile" class=" flex flex-col w-1/2">
-      <app-form-usuario *ngIf="profile?.name == ''; else pokemonList" ></app-form-usuario>
-      <ng-template #pokemonList>
-        <app-pokemon-list></app-pokemon-list>
-      </ng-template>
+
+    <div class=" flex flex-col w-1/2" *ngIf="!showView">
+      <div>
+        <app-form-usuario [profileToEdit]="profile" [editingProfile]="editingProfile"  *ngIf="(profile?.name == '' || editingProfile) ; else pokemonList" ></app-form-usuario>
+        <ng-template #pokemonList>
+          <app-pokemon-list></app-pokemon-list>
+        </ng-template>
+      </div>
+    </div>
+    <div  class=" flex flex-col w-1/2" *ngIf="showView">
+      <app-pokemon-show  [profile]="profileEditing" ></app-pokemon-show>
     </div>
   </div>
-
+  </div>
 
 </main>
 

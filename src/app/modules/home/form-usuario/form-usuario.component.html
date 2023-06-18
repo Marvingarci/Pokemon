@@ -54,7 +54,7 @@
         <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
       </mat-form-field>
       <div class="flex w-full justify-center">
-        <button type="button" [ngClass]="{'bg-darkBlue text-white ': formProfile.valid, 'bg-buttonGray text-darkGray': formProfile.invalid}" class="rounded-md px-12 py-2 font-semibold text-lg" (click)="saveProfile()">Continuar</button>
+        <button type="button" [disabled]="formProfile.invalid" [ngClass]="{'bg-darkBlue text-white ': formProfile.valid, 'bg-buttonGray text-darkGray': formProfile.invalid}" class="rounded-md px-12 py-2 font-semibold text-lg" (click)="saveProfile()">Continuar</button>
       </div>
 
     </form>

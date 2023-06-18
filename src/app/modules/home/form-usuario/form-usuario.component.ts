@@ -1,13 +1,14 @@
 // import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { map, Observable, startWith, switchMap, timer } from 'rxjs';
+import { map, Observable, of, startWith, switchMap, timer } from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { PrincipalService } from 'src/app/services/principal.service';
 import { PokemondbService } from 'src/app/services/pokemondb.service';
 import { Profile } from 'src/app/models/profile';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-usuario',
@@ -17,14 +18,13 @@ import { Profile } from 'src/app/models/profile';
 export class FormUsuarioComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   myProfile!: Profile 
-  // fruitCtrl = new FormControl('');
   filteredHobbies!: Observable<string[]>;
   hobbies: string[] = [];
   allHobbies: string[] = ['Jugar Futbol', 'Jugar Basketball', 'Jugar Tenis', 'Jugar Volleyball', 'Jugar Fifa'];
   formProfile: FormGroup = new FormGroup({})
-
+  @Input() editingProfile: boolean = false
+  @Input() profileToEdit!: Profile
   @ViewChild('hobbieInput') hobbieInput!: ElementRef<HTMLInputElement>;
-  // announcer = inject(LiveAnnouncer);
 
   ngOnInit(): void {
       this.formProfile = this.fb.group({
@@ -33,6 +33,7 @@ export class FormUsuarioComponent implements OnInit {
         hobbie: [[], []],
         birthday: ['', [Validators.required]],
         DNI: ['', []],
+        Pokemons: [[], []]
       })
 
       this.principalService.imageChange$.subscribe((newImg: string)=>{
@@ -43,10 +44,17 @@ export class FormUsuarioComponent implements OnInit {
         startWith(null),
         map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allHobbies.slice())),
       );
+
+      if(this.editingProfile){
+        console.log(this.profileToEdit)
+        this.formProfile.patchValue(this.profileToEdit)
+        this.hobbies.push(this.profileToEdit.hobbie)
+      }
   }
   constructor(
     private principalService: PrincipalService, 
     private pokemonService: PokemondbService, 
+    private router: Router, 
     private fb: FormBuilder) 
   {
 
@@ -55,45 +63,45 @@ export class FormUsuarioComponent implements OnInit {
     console.log(this.hobbies)
     console.log(this.formProfile.value)
     this.principalService.isLoading$.next(true)
-    timer(3000).pipe(
+
+    of(1).pipe(
       switchMap(()=>{
-        return this.pokemonService.saveProfile(this.formProfile.value as Profile)
+        if(!this.editingProfile){
+          return this.pokemonService.saveProfile(this.formProfile.value as Profile)
+        }else{
+          return this.pokemonService.updateProfile(this.formProfile.value as Profile, this.profileToEdit.id)
+        }
       })
     ).subscribe((response: any)=>{
       this.myProfile = response
       this.principalService.actualProfile$.next(this.myProfile)
+      if(this.editingProfile){
+        this.router.navigate(['/home/show/'+this.myProfile.id])
+        return      
+      }
       this.principalService.isLoading$.next(false)
     }, error => console.log(error))
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-
-    // Add our fruit
     if (value) {
       this.hobbies.push(value);
     }
-
-    // Clear the input value
     event.chipInput!.clear();
-
     (this.formProfile.get('hobbie') as FormControl).setValue(this.hobbies);
   }
 
   remove(fruit: string): void {
     const index = this.hobbies.indexOf(fruit);
-
     if (index >= 0) {
       this.hobbies.splice(index, 1);
-
-      // this.announcer.announce(`Removed ${fruit}`);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.hobbies.push(event.option.viewValue);
     this.hobbieInput.nativeElement.value = '';
-    // (this.formProfile.get('hobbie') as FormControl).setValue(null);
   }
 
   private _filter(value: string): string[] {

@@ -21,6 +21,10 @@ import { PokemonCardComponent } from './pokemon-list/pokemon-card/pokemon-card.c
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { PokeidPipe } from 'src/app/pipes/pokeid.pipe';
 import { SortGenerationPipe } from 'src/app/pipes/sort-generation.pipe';
+import { ShowprofileResolver } from 'src/app/resolvers/showprofile.resolver';
+import { PokemonShowComponent } from './pokemon-show/pokemon-show.component';
+import { ProgressComponent } from 'src/app/ui/progress/progress.component';
+import { ImgCropperComponent } from './profile/img-cropper/img-cropper.component';
 
 const routes: Routes = [
     {
@@ -30,14 +34,22 @@ const routes: Routes = [
           path: 'new', component: PrincipalComponent
         },
         {
-          path: 'show/:id', component: PrincipalComponent
+          path: 'edit-profile/:id', component: PrincipalComponent,
+          resolve: {editProfile: ShowprofileResolver }
+        },
+        {
+          path: 'show/:id', component: PrincipalComponent,
+          resolve: {profile: ShowprofileResolver }
+        },
+        {
+          path: '**', redirectTo: 'new'
         }
       ]
     }
   ]
 
 @NgModule({
-  declarations: [ProfileComponent,LoadingComponent, PokeidPipe, SortGenerationPipe, PrincipalComponent, FormUsuarioComponent, PokemonListComponent, PokemonCardComponent],
+  declarations: [ProfileComponent,LoadingComponent,ProgressComponent, PokeidPipe, SortGenerationPipe, PrincipalComponent, FormUsuarioComponent, PokemonListComponent, PokemonCardComponent, PokemonShowComponent, ImgCropperComponent],
   imports: [
     CommonModule,
     MatInputModule,

@@ -1,50 +1,48 @@
 <!-- Card itself -->
   <div *ngIf="(profile$ | async) as profile" class="px-4 bg-yellow space-y-10 py-14 rounded-[50px] w-96 justify-center items-center mt-10 mx-auto">
-    <h1 *ngIf="profile?.name == ''" class="text-center text-2xl">Imagen perfil</h1>
-    <h1 *ngIf="profile?.name != ''" class="text-center text-blue font-bold text-3xl">{{profile.name}}</h1>
-
-    <div class=" ">
-      <img class="w-64 h-64 relative mx-auto flex rounded-full justify-center items-center border-[12px] border-white bg-bgGray" [src]="imageSrc || profile.img" alt="" >
-      <!-- <svg class="text-blueStroke w-24 h-24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg> -->
+    <h1 *ngIf="profile?.name == '' && !showView" class="text-center text-2xl">Imagen perfil</h1>
+    <h1 *ngIf="profile?.name != '' && !showView" class="text-center text-blue font-bold text-3xl">{{profile.name}}</h1>
+    <div class="flex justify-between items-center px-4" *ngIf="showView">
+      <h1  class="text-center text-nightkGray text-2xl">Entrenador</h1>
+      <img src="https://fevgames.net/wp-content/uploads/2016/07/badge_l1.png" class="w-16 h-16" alt="">
+    </div>
+    
+    <div class="">
+      <img *ngIf="imageSrc != '' || profile.img != ''" class="w-64 h-64 relative mx-auto flex rounded-full justify-center items-center border-[12px] border-white bg-bgGray" [src]="imageSrc || profile.img" alt="" >
+      <div *ngIf="imageSrc == '' && profile.img == ''" class="w-64 h-64 relative mx-auto flex rounded-full justify-center items-center border-[12px] border-white bg-bgGray" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 text-darkGray h-16">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+        </svg>        
+      </div>
     </div>
 
-    <div *ngIf="profile?.birthday == ''" class="flex items-center justify-center w-full">
+    <div *ngIf="profile?.birthday == '' || editingProfile" class="flex items-center justify-center w-full">
       <label for="dropzone-file" class="flex flex-col mx-4 items-center justify-center w-full h-20 border-2 border-blueGreen border-dashed  rounded-lg cursor-pointer bg-white ">
           <div  class="flex items-center justify-around w-full pt-4 pb-4">
-              <p class="text-sm text-blueGreen"><span class="font-semibold">Adjuntar una foto</span></p>
-               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blueGreen">
+              <p class="text-sm text-blueGreen"><span class="font-semibold">{{ imageSrc != '' ? fileName : "Adjuntar una foto"}}</span></p>
+               <svg *ngIf="imageSrc == ''" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blueGreen">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
               </svg>
+              <svg (click)="removeImg()" *ngIf="imageSrc != ''" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500 cursor-pointer">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+              
           </div>
-          <input id="dropzone-file" type="file" (change)="fileChangeEvent($event)" class="hidden" />
+          <input [disabled]="imageSrc != ''" id="dropzone-file" type="file" (change)="fileChangeEvent($event)" class="hidden" />
       </label>
   </div> 
-  <div class="flex flex-col text-2xl space-y-4 px-3" *ngIf="profile?.birthday != ''">
-    <div class="flex justify-between text-darkBlue">
+  <div class="flex flex-col text-2xl space-y-4 px-3" *ngIf="profile?.birthday != '' && !editingProfile">
+    <div class="flex justify-between text-nightkGray">
       <span> <strong>Pasatiempo:</strong> </span>
       <span>{{profile?.hobbie}}</span>
     </div>
-    <div class="flex justify-between text-darkBlue">
+    <div class="flex justify-between text-nightkGray">
       <span> <strong>Edad:</strong> </span>
       <span>{{this.principalService.getAge(profile.birthday) +" años"}}</span>
     </div>
   </div>
-  </div>
-<ng-template #someInput>
-  <div class="w-max-full h-max-full w-[500px] w-[500px]">
-    <image-cropper
-      [imageChangedEvent]="imageChangedEvent"
-      [maintainAspectRatio]="true"
-      [aspectRatio]="4 / 4"
-      format="png"
-      output="base64"
-      (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded()"
-      (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()"
-  ></image-cropper>
-  <button mat-raised-button color="primary" (click)="dialogRef.close()">Done</button>
-  </div>
+</div>
+
+<ng-template #modalCropper>
+  <app-img-cropper [imageChangedEvent]="imageChangedEvent" (closeModal)="closeDialog($event)" (sendImage)="setImage($event)" ></app-img-cropper>
 </ng-template>
