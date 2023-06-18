@@ -17,6 +17,8 @@ import { Router } from '@angular/router';
 })
 export class FormUsuarioComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+
   myProfile!: Profile 
   filteredHobbies!: Observable<string[]>;
   hobbies: string[] = [];
@@ -50,6 +52,16 @@ export class FormUsuarioComponent implements OnInit {
         this.formProfile.patchValue(this.profileToEdit)
         this.hobbies.push(this.profileToEdit.hobbie)
       }
+
+      this.formProfile.valueChanges.subscribe((data: any)=>{
+       if(this.principalService.getAge(data.birthday) < 18){
+        this.formProfile.get('DNI')?.clearValidators()
+        this.formProfile.get('DNI')?.updateValueAndValidity()
+      }else{
+        this.formProfile.get('DNI')?.addValidators([Validators.required])
+        this.formProfile.get('DNI')?.updateValueAndValidity()
+       }
+      })
   }
   constructor(
     private principalService: PrincipalService, 

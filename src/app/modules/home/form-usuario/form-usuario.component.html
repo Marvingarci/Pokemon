@@ -8,7 +8,7 @@
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Nombre</mat-label>
         <input formControlName="name" matInput placeholder="Ex. Marvin" required>
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        <mat-error *ngIf="formProfile.get('name')?.invalid">Este valor es requerido</mat-error>
       </mat-form-field>
 
       <!-- Pasatiempio -->
@@ -43,15 +43,15 @@
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Cumpleaños</mat-label>
         <input formControlName="birthday" matInput [matDatepicker]="picker">
-        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+       <mat-error *ngIf="formProfile.get('birthday')?.invalid">Este valor es requerido</mat-error>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>DNI</mat-label>
-        <input formControlName="DNI" matInput required>
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        <input [textMask]="{mask: mask}" formControlName="DNI" matInput required>
+        <mat-error *ngIf="formProfile.get('DNI')?.invalid">Usted es mayor de edad, valor requerido</mat-error>
       </mat-form-field>
       <div class="flex w-full justify-center">
         <button type="button" [disabled]="formProfile.invalid" [ngClass]="{'bg-darkBlue text-white ': formProfile.valid, 'bg-buttonGray text-darkGray': formProfile.invalid}" class="rounded-md px-12 py-2 font-semibold text-lg" (click)="saveProfile()">Continuar</button>

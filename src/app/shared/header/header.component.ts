@@ -1,17 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Profile } from 'src/app/models/profile';
 import { PokemondbService } from 'src/app/services/pokemondb.service';
-import { PrincipalService } from 'src/app/services/principal.service';
 
 @Component({
   selector: 'app-header',
   template: `
     <main class="flex h-24 w-full justify-between px-3 shadow-md" >
       <img class="w-98" src="../assets/Pokemon-Logo.png" alt="" >
-      <div class="flex items-center space-x-1 rounded-lg border border-darkBlue px-14 py-2 my-auto">
-      <button  mat-button [matMenuTriggerFor]="menu">{{name}}</button>
+      <div *ngIf="profile.length > 1" class="flex items-center space-x-1 rounded-lg border border-darkBlue px-14 py-2 my-auto">
+      <button   mat-button [matMenuTriggerFor]="menu">{{name}}</button>
       
       <mat-menu #menu="matMenu">
         <button *ngFor="let prof of profile" (click)="goToProfile(prof.id, prof.name)" mat-menu-item>{{prof.name}}</button>
@@ -28,7 +26,7 @@ import { PrincipalService } from 'src/app/services/principal.service';
 })
 export class HeaderComponent implements OnInit {
   @Input() name: string = 'Usuario'
-  profile! : Profile[]
+  profile : Profile[] = []
   constructor(
     private pokemonService: PokemondbService, 
     private router: Router, 

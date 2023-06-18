@@ -25,6 +25,7 @@ import { ShowprofileResolver } from 'src/app/resolvers/showprofile.resolver';
 import { PokemonShowComponent } from './pokemon-show/pokemon-show.component';
 import { ProgressComponent } from 'src/app/ui/progress/progress.component';
 import { ImgCropperComponent } from './profile/img-cropper/img-cropper.component';
+import { TextMaskModule } from 'angular2-text-mask';
 
 const routes: Routes = [
     {
@@ -65,6 +66,7 @@ const routes: Routes = [
     MatButtonModule,
     MatDialogModule,
     VirtualScrollerModule,
+    TextMaskModule,
     RouterModule.forChild(routes)
   ]
 })

@@ -8,8 +8,8 @@ import { PokemondbService } from 'src/app/services/pokemondb.service';
   selector: 'app-progress',
   template: `
   <div class="flex my-2 justify-between">
-    <span class="text- text-xl">{{ conf[stat.stat.name].nameEs}}</span>
-    <div class="rounded-xl h-4 w-36 md:w-40 lg:w-40  flex border-4 border-white shadow-lg">
+    <span class="text-md lg:text-xl">{{ conf[stat.stat.name].nameEs}}</span>
+    <div class="rounded-xl h-4 w-28 md:w-40 lg:w-40  flex border-4 border-white shadow-lg">
       <div *ngIf="(color$ | async) as color" [ngStyle]="{'width': ((stat.base_stat/conf[stat.stat.name].max)*100)+'%'}" [ngClass]="{'bg-red-300' : true}"  class="bg-pink-300 rounded-xl"></div>
     </div>
   </div>

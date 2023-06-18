@@ -1,6 +1,6 @@
 <main *ngIf="!(showLoading | async); else loading">
   <div *ngIf="(profile$ | async) as profile"  class="flex flex-col pt-20 px-16">
-  <div class="flex space-x-1"> 
+  <div class="flex space-x-1 flex justify-center lg:justify-start"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-darkBlue mt-2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
     </svg>
@@ -24,12 +24,12 @@
     </div>
   </div>
 
-  <div class="flex">
-    <div class=" flex flex-col w-1/2">
+  <div class="flex flex-col space-y-5 items-center  lg:flex-row lg:items-start ">
+    <div class=" flex flex-col w-full lg:w-1/2">
         <app-profile [editingProfile]="editingProfile" [showView]="showView"></app-profile>
     </div>
 
-    <div class=" flex flex-col w-1/2" *ngIf="!showView">
+    <div class=" flex flex-col w-full lg:w-1/2" *ngIf="!showView">
       <div>
         <app-form-usuario [profileToEdit]="profile" [editingProfile]="editingProfile"  *ngIf="(profile?.name == '' || editingProfile) ; else pokemonList" ></app-form-usuario>
         <ng-template #pokemonList>
@@ -37,7 +37,7 @@
         </ng-template>
       </div>
     </div>
-    <div  class=" flex flex-col w-1/2" *ngIf="showView">
+    <div  class=" flex flex-col w-full lg:w-1/2" *ngIf="showView">
       <app-pokemon-show  [profile]="profileEditing" ></app-pokemon-show>
     </div>
   </div>
