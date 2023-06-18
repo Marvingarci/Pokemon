@@ -9,6 +9,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { HomeModule } from './modules/home/home.module';
 import { HttpClientModule } from '@angular/common/http';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
     HomeModule,
     HttpClientModule,
     VirtualScrollerModule,
-
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

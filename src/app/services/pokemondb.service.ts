@@ -13,8 +13,8 @@ export class PokemondbService {
   editPokemon: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
   constructor(private http: HttpClient) { }
 
-  getProfile(): Observable<Profile>{
-    return this.http.get<Profile>(environment.API_ENDPOINT+"profiles")
+  getProfile(): Observable<Profile[]>{
+    return this.http.get<Profile[]>(environment.API_ENDPOINT+"profiles")
   }
   getProfileById(id: number): Observable<Profile>{
     return this.http.get<Profile>(environment.API_ENDPOINT+"profiles/"+id)

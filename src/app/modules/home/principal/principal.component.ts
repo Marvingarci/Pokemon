@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Profile } from 'src/app/models/profile';
 import { PokemondbService } from 'src/app/services/pokemondb.service';
@@ -31,6 +31,15 @@ export class PrincipalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+
+    this.route.params.subscribe((params: Params) => {
+      this.loadData()
+    });
+    
+  }
+
+  loadData(){
     if(this.route.snapshot.data['profile']){
       this.showView = true
       this.principalService.actualProfile$.next(this.route.snapshot.data['profile'])
@@ -44,7 +53,6 @@ export class PrincipalComponent implements OnInit {
       this.principalService.isLoading$.next(false)
       // console.log(this.route.snapshot.data['editProfile'])
     }
-    
   }
 
   editProfile(id: number){

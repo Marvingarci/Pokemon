@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Pokemon } from 'src/app/models/Pokemon';
 import { Profile } from 'src/app/models/profile';
 import { PokemondbService } from 'src/app/services/pokemondb.service';
@@ -8,7 +8,7 @@ import { PokemondbService } from 'src/app/services/pokemondb.service';
   templateUrl: './pokemon-show.component.html',
   styleUrls: ['./pokemon-show.component.css']
 })
-export class PokemonShowComponent implements OnInit {
+export class PokemonShowComponent implements OnInit, OnChanges {
   
   constructor(
     private pokemonService: PokemondbService
@@ -20,6 +20,8 @@ export class PokemonShowComponent implements OnInit {
   pokemons!: Pokemon[] | undefined
 
   ngOnInit(): void {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
     this.pokemons = this.profile.Pokemons
     this.pokemons?.forEach((pokemon: Pokemon)=>{
       pokemon.types.forEach(type => {
