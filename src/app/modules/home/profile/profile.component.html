@@ -32,7 +32,7 @@
       </label>
   </div> 
   <div class="flex flex-col text-2xl space-y-4 px-3" *ngIf="profile?.birthday != '' && !editingProfile">
-    <div class="flex justify-between text-nightkGray">
+    <div *ngIf="profile?.hobbie != ''" class="flex justify-between text-nightkGray">
       <span> <strong>Pasatiempo:</strong> </span>
       <span>{{profile?.hobbie}}</span>
     </div>

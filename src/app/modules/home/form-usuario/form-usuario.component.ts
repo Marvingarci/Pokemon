@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 })
 export class FormUsuarioComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-
+  mask: any = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/]
+  lastBirthday: string= ''
   myProfile!: Profile 
   filteredHobbies!: Observable<string[]>;
   hobbies: string[] = [];
@@ -34,9 +34,11 @@ export class FormUsuarioComponent implements OnInit {
         name: ['', [Validators.required]],
         hobbie: [[], []],
         birthday: ['', [Validators.required]],
-        DNI: ['', []],
+        DNI: ['', [Validators.minLength(15) ]],
         Pokemons: [[], []]
       })
+      this.formProfile.controls['DNI'].disable();
+
 
       this.principalService.imageChange$.subscribe((newImg: string)=>{
         this.formProfile.patchValue({img:newImg})
@@ -50,17 +52,25 @@ export class FormUsuarioComponent implements OnInit {
       if(this.editingProfile){
         console.log(this.profileToEdit)
         this.formProfile.patchValue(this.profileToEdit)
-        this.hobbies.push(this.profileToEdit.hobbie)
+        if(this.profileToEdit.hobbie != ''){
+          this.hobbies.push(this.profileToEdit.hobbie)
+        }
+        this.formProfile.controls['DNI'].enable();
       }
 
       this.formProfile.valueChanges.subscribe((data: any)=>{
-       if(this.principalService.getAge(data.birthday) < 18){
-        this.formProfile.get('DNI')?.clearValidators()
-        this.formProfile.get('DNI')?.updateValueAndValidity()
-      }else{
-        this.formProfile.get('DNI')?.addValidators([Validators.required])
-        this.formProfile.get('DNI')?.updateValueAndValidity()
-       }
+        if(this.lastBirthday != data.birthday){
+          this.lastBirthday = data.birthday
+          if(this.principalService.getAge(data.birthday) < 18){
+           this.formProfile.get('DNI')?.clearValidators()
+           this.formProfile.get('DNI')?.updateValueAndValidity()
+           this.formProfile.controls['DNI'].enable();
+         }else{
+           this.formProfile.get('DNI')?.addValidators([Validators.required, Validators.minLength(15), Validators.pattern('^[^_]*$')])
+           this.formProfile.get('DNI')?.updateValueAndValidity()
+           this.formProfile.controls['DNI'].enable();
+          }
+        }
       })
   }
   constructor(
